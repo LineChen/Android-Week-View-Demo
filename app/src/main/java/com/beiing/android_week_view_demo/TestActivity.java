@@ -3,6 +3,7 @@ package com.beiing.android_week_view_demo;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -116,7 +117,7 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
         Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 10);
+        startTime.set(Calendar.HOUR_OF_DAY, 12);
         startTime.set(Calendar.MINUTE, 0);
         startTime.set(Calendar.MONTH, newMonth - 1);
         startTime.set(Calendar.YEAR, newYear);
@@ -126,6 +127,19 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
         WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_01));
         events.add(event);
+
+        Calendar startTime2 = Calendar.getInstance();
+        startTime2.set(Calendar.HOUR_OF_DAY, 14);
+        startTime2.set(Calendar.MINUTE, 0);
+        startTime2.set(Calendar.MONTH, newMonth - 1);
+        startTime2.set(Calendar.YEAR, newYear);
+        Calendar endTime2 = (Calendar) startTime2.clone();
+        endTime2.add(Calendar.HOUR, 1);
+        endTime2.set(Calendar.MONTH, newMonth - 1);
+        WeekViewEvent event2 = new WeekViewEvent(2, getEventTitle(startTime2), startTime2, endTime2);
+        event2.setColor(getResources().getColor(R.color.event_color_01));
+        events.add(event2);
+
 
         return events;
     }
@@ -139,6 +153,9 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
     //-------------------------------------------------点击事件-------------------------------------
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        Calendar time = event.getStartTime();
+        String date = String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH) + 1, time.get(Calendar.DAY_OF_MONTH));
+        Log.e("====", "date:" + date);
         Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
