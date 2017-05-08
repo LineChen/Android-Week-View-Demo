@@ -129,7 +129,7 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
         events.add(event);
 
         Calendar startTime2 = Calendar.getInstance();
-        startTime2.set(Calendar.HOUR_OF_DAY, 14);
+        startTime2.set(Calendar.HOUR_OF_DAY, 13);
         startTime2.set(Calendar.MINUTE, 0);
         startTime2.set(Calendar.MONTH, newMonth - 1);
         startTime2.set(Calendar.YEAR, newYear);

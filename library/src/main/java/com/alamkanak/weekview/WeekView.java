@@ -69,6 +69,7 @@ public class WeekView extends View {
     private float mHeaderHeight;
     /**事件title分割线宽度**/
     private int mEventTitleLineWidth = 1;
+    private int mEventBackgroudBorderWidth = 1;
     private GestureDetectorCompat mGestureDetector;
     private OverScroller mScroller;
     private PointF mCurrentOrigin = new PointF(0f, 0f);
@@ -86,6 +87,7 @@ public class WeekView extends View {
     private Paint mNowLinePaint;
     private Paint mTodayHeaderTextPaint;
     private Paint mEventBackgroundPaint;
+    private Paint mEventBackgroundBorderPaint;
     private Paint mEventTitleLinePaint;
     private float mHeaderColumnWidth;
     private List<EventRect> mEventRects;
@@ -439,6 +441,11 @@ public class WeekView extends View {
         // Prepare event background color.//事件背景画笔
         mEventBackgroundPaint = new Paint();
         mEventBackgroundPaint.setColor(Color.rgb(174, 208, 238));
+
+        mEventBackgroundBorderPaint = new Paint();
+        mEventBackgroundBorderPaint.setColor(Color.WHITE);
+        mEventBackgroundBorderPaint.setStyle(Paint.Style.STROKE);
+        mEventBackgroundBorderPaint.setStrokeWidth(mEventBackgroudBorderWidth);
 
         // Prepare header column background color.
         mHeaderColumnBackgroundPaint = new Paint();
@@ -846,6 +853,7 @@ public class WeekView extends View {
                         mEventRects.get(i).rectF = new RectF(left, top, right, bottom);
                         mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
+                        canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundBorderPaint);
                         drawEventTitleCustom(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
                     }
                     else
@@ -890,6 +898,7 @@ public class WeekView extends View {
                         mEventRects.get(i).rectF = new RectF(left, top, right, bottom);
                         mEventBackgroundPaint.setColor(mEventRects.get(i).event.getColor() == 0 ? mDefaultEventColor : mEventRects.get(i).event.getColor());
                         canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundPaint);
+                        canvas.drawRoundRect(mEventRects.get(i).rectF, mEventCornerRadius, mEventCornerRadius, mEventBackgroundBorderPaint);
                         drawEventTitleCustom(mEventRects.get(i).event, mEventRects.get(i).rectF, canvas, top, left);
                     }
                     else
