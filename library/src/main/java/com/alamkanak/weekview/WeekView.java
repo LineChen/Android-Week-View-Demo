@@ -41,6 +41,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import static com.alamkanak.weekview.WeekViewUtil.DATE_FORMAT_MONTH;
+import static com.alamkanak.weekview.WeekViewUtil.getFormatDate;
 import static com.alamkanak.weekview.WeekViewUtil.isSameDay;
 import static com.alamkanak.weekview.WeekViewUtil.today;
 
@@ -747,6 +749,16 @@ public class WeekView extends View {
         // Hide everything in the first cell (top left corner).左上角部分
         canvas.clipRect(0, 0, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE);
         canvas.drawRect(0, 0, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint);
+        TextPaint mTopLeftPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTopLeftPaint.setColor(Color.BLACK);
+        mTopLeftPaint.setTextSize(40);
+        StaticLayout tlLayout = new StaticLayout(getFormatDate(mFirstVisibleDay.getTimeInMillis(), DATE_FORMAT_MONTH), mTopLeftPaint, 100,
+                Layout.Alignment.ALIGN_CENTER, 1.1F, 0.0F, true);
+        canvas.save();
+        int translateY = (int) ((mHeaderHeight + mHeaderRowPadding * 2 - tlLayout.getHeight()) / 2);
+        canvas.translate(0, translateY);
+        tlLayout.draw(canvas);
+        canvas.restore();
 
         // Clip to paint header row only.
         canvas.clipRect(mHeaderColumnWidth, 0, getWidth(), mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE);
@@ -774,7 +786,7 @@ public class WeekView extends View {
             int yTranslate = (int) ((mHeaderHeight + mHeaderRowPadding * 2 - layout.getHeight()) / 2);
             canvas.translate(startPixel + mWidthPerDay / 2, yTranslate);
             layout.draw(canvas);
-            canvas.restore();//别忘了restore
+            canvas.restore();
 
 //  原绘制toptitle方法:canvas.drawText(dayLabel, startPixel + mWidthPerDay / 2, mHeaderTextHeight + mHeaderRowPadding, sameDay ? mTodayHeaderTextPaint : mHeaderTextPaint);
             drawAllDayEvents(day, startPixel, canvas);

@@ -1,12 +1,15 @@
 package com.alamkanak.weekview;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by jesse on 6/02/2016.
  */
 public class WeekViewUtil {
 
+    public static final String DATE_FORMAT_MONTH = "M月";
 
     /////////////////////////////////////////////////////////////////
     //
@@ -35,5 +38,23 @@ public class WeekViewUtil {
         today.set(Calendar.SECOND, 0);
         today.set(Calendar.MILLISECOND, 0);
         return today;
+    }
+
+
+    /**
+     * @param time
+     * @param format
+     * @return
+     */
+    public static String getFormatDate(long time, String format) {
+        Date d = new Date(time);
+        return getFormatDate(d, format);
+    }
+
+    public static String getFormatDate(Date time, String format) {
+        String date;
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        date = sdf.format(time);
+        return date;
     }
 }
