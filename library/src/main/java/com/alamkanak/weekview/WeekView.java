@@ -88,7 +88,7 @@ public class WeekView extends View {
     private Paint mFutureWeekendBackgroundPaint;
     private Paint mPastWeekendBackgroundPaint;
     private Paint mNowLinePaint;
-    private Paint mTodayHeaderTextPaint;
+    private TextPaint mTodayHeaderTextPaint;
     private Paint mEventBackgroundPaint;
     private Paint mEventBackgroundBorderPaint;
     private Paint mEventTitleLinePaint;
@@ -447,7 +447,7 @@ public class WeekView extends View {
         mTodayBackgroundPaint.setColor(mTodayBackgroundColor);
 
         // Prepare today header text color paint.//今天标题相关设置
-        mTodayHeaderTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTodayHeaderTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTodayHeaderTextPaint.setTextAlign(Paint.Align.CENTER);
         mTodayHeaderTextPaint.setTextSize(mTextSize);
         mTodayHeaderTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -790,7 +790,7 @@ public class WeekView extends View {
                 throw new IllegalStateException("A DateTimeInterpreter must not return null date");
 
             //为了绘制换行文本:
-            StaticLayout layout = new StaticLayout(dayLabel, mHeaderTextPaint, 300,
+            StaticLayout layout = new StaticLayout(dayLabel, sameDay ? mTodayHeaderTextPaint : mHeaderTextPaint, 300,
                     Layout.Alignment.ALIGN_NORMAL, 1.1F, 0.0F, true);
             canvas.save();
             int yTranslate = (int) ((mHeaderHeight + mHeaderRowPadding * 2 - layout.getHeight()) / 2);
