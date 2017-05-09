@@ -54,6 +54,7 @@ public class WeekView extends View {
 
 
 
+
     private enum Direction {
         NONE, LEFT, RIGHT, VERTICAL
     }
@@ -91,6 +92,7 @@ public class WeekView extends View {
     private Paint mEventBackgroundPaint;
     private Paint mEventBackgroundBorderPaint;
     private Paint mEventTitleLinePaint;
+    private TextPaint mTopLeftPaint;
     private float mHeaderColumnWidth;
     private List<EventRect> mEventRects;
     private List<? extends WeekViewEvent> mPreviousPeriodEvents;
@@ -154,9 +156,11 @@ public class WeekView extends View {
     private boolean mVerticalFlingEnabled = true;
     private int mAllDayEventHeight = 100;
     private int mScrollDuration = 250;
+    private int mTopLeftTextSize = 20;
+    private int mTopleftTextColor = Color.BLACK;
 
     /**开始和结束时间**/
-    private int mStartHour = 7;
+    private int mStartHour = 0;
     private int mEndHour = 24;
 
     // Listeners.
@@ -367,6 +371,10 @@ public class WeekView extends View {
             mVerticalFlingEnabled = a.getBoolean(R.styleable.WeekView_verticalFlingEnabled, mVerticalFlingEnabled);
             mAllDayEventHeight = a.getDimensionPixelSize(R.styleable.WeekView_allDayEventHeight, mAllDayEventHeight);
             mScrollDuration = a.getInt(R.styleable.WeekView_scrollDuration, mScrollDuration);
+            mStartHour = a.getInt(R.styleable.WeekView_week_startHour, 0);
+            mEndHour = a.getInt(R.styleable.WeekView_week_endHour, 24);
+            mTopleftTextColor = a.getColor(R.styleable.WeekView_week_topleftTextColor, mTopleftTextColor);
+            mTopLeftTextSize = a.getDimensionPixelSize(R.styleable.WeekView_week_topleftTextSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTopLeftTextSize, context.getResources().getDisplayMetrics()));
         } finally {
             a.recycle();
         }
@@ -423,6 +431,11 @@ public class WeekView extends View {
         mHourSeparatorPaint.setStyle(Paint.Style.STROKE);
         mHourSeparatorPaint.setStrokeWidth(mHourSeparatorHeight);
         mHourSeparatorPaint.setColor(mHourSeparatorColor);
+
+        //左上角
+        mTopLeftPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mTopLeftPaint.setColor(Color.BLACK);
+        mTopLeftPaint.setTextSize(40);
 
         // Prepare the "now" line color paint
         mNowLinePaint = new Paint();
@@ -749,14 +762,11 @@ public class WeekView extends View {
         // Hide everything in the first cell (top left corner).左上角部分
         canvas.clipRect(0, 0, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, Region.Op.REPLACE);
         canvas.drawRect(0, 0, mTimeTextWidth + mHeaderColumnPadding * 2, mHeaderHeight + mHeaderRowPadding * 2, mHeaderBackgroundPaint);
-        TextPaint mTopLeftPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        mTopLeftPaint.setColor(Color.BLACK);
-        mTopLeftPaint.setTextSize(40);
         StaticLayout tlLayout = new StaticLayout(getFormatDate(mFirstVisibleDay.getTimeInMillis(), DATE_FORMAT_MONTH), mTopLeftPaint, 100,
                 Layout.Alignment.ALIGN_CENTER, 1.1F, 0.0F, true);
         canvas.save();
         int translateY = (int) ((mHeaderHeight + mHeaderRowPadding * 2 - tlLayout.getHeight()) / 2);
-        canvas.translate(0, translateY);
+        canvas.translate(10, translateY);
         tlLayout.draw(canvas);
         canvas.restore();
 

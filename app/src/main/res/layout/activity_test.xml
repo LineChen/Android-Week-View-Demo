@@ -16,11 +16,13 @@
         app:headerColumnTextColor="@color/toolbar_text"
         app:headerRowPadding="12dp"
         app:columnGap="8dp"
-        app:noOfVisibleDays="3"
+        app:noOfVisibleDays="7"
         app:headerRowBackgroundColor="@color/toolbar"
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="@color/today_bg"
         app:headerColumnBackground="#ffffffff"
-        app:todayHeaderTextColor="@color/colorAccent" />
+        app:todayHeaderTextColor="@color/colorAccent"
+        app:week_startHour="7"
+        />
 
 </RelativeLayout>

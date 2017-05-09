@@ -51,5 +51,9 @@
         <attr name="verticalFlingEnabled" format="boolean"/>
         <attr name="allDayEventHeight" format="dimension"/>
         <attr name="scrollDuration" format="integer"/>
+        <attr name="week_startHour" format="integer"/>
+        <attr name="week_endHour" format="integer"/>
+        <attr name="week_topleftTextSize" format="dimension"/>
+        <attr name="week_topleftTextColor" format="color"/>
     </declare-styleable>
 </resources>
