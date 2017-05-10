@@ -50,9 +50,10 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
         int id = item.getItemId();
         setupDateTimeInterpreter(id == R.id.action_week_view);
         switch (id) {
-            case R.id.action_today:
-                mWeekView.goToToday();
+            case R.id.action_three_day_view:
                 return true;
+
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -109,44 +110,31 @@ public class TestActivity extends AppCompatActivity implements WeekView.EventCli
         });
     }
 
-
 //------------------------------事件添加:该方法必须重写，不能返回null---------------------------------------------------------
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 12);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.MONTH, newMonth - 1);
-        startTime.set(Calendar.YEAR, newYear);
-        Calendar endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR, 1);
-        endTime.set(Calendar.MONTH, newMonth - 1);
-        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-        event.setColor(getResources().getColor(R.color.event_color_01));
-        events.add(event);
+        Log.e("====", "onMonthChange:" + newYear + newMonth);
+        List<WeekViewEvent> events = new ArrayList<>();
 
         Calendar startTime2 = Calendar.getInstance();
         startTime2.set(Calendar.HOUR_OF_DAY, 13);
         startTime2.set(Calendar.MINUTE, 0);
-        startTime2.set(Calendar.MONTH, newMonth - 1);
+        startTime2.set(Calendar.MONTH, newMonth);
         startTime2.set(Calendar.YEAR, newYear);
         Calendar endTime2 = (Calendar) startTime2.clone();
         endTime2.add(Calendar.HOUR, 1);
-        endTime2.set(Calendar.MONTH, newMonth - 1);
+        endTime2.set(Calendar.MONTH, newMonth);
         WeekViewEvent event2 = new WeekViewEvent(2, getEventTitle(startTime2), startTime2, endTime2);
         event2.setColor(getResources().getColor(R.color.event_color_01));
         events.add(event2);
-
 
         return events;
     }
 
 
     protected String getEventTitle(Calendar time) {
-        return "赵-王-莉-莉";
+        return "赵-日-天";
     }
 
 

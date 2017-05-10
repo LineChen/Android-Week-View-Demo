@@ -1000,7 +1000,7 @@ public class WeekView extends View {
         String[] eventTitleArray = event.getName().split("-");
         if(eventTitleArray.length == 0) return;
         int availableWidth = (int) (rect.right - originalLeft);
-        int stepW = eventTitleArray.length == 1 ? 0 : (availableWidth - (eventTitleArray.length - 1) * mEventTitleLineWidth) / (eventTitleArray.length);
+        int stepW = eventTitleArray.length == 1 ? availableWidth : (availableWidth - (eventTitleArray.length - 1) * mEventTitleLineWidth) / (eventTitleArray.length);
         for (int i = 0; i < eventTitleArray.length; i++) {
             StaticLayout textLayout = new StaticLayout(eventTitleArray[i], mEventTextPaint, stepW, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
             float translateY = originalTop + (mHourHeight - textLayout.getHeight()) / 2;
